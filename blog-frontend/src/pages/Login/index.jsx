@@ -1,6 +1,6 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -9,10 +9,10 @@ import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 
 import styles from "./Login.module.scss";
-import { fetchAuth } from "../../redux/slices/auth";
+import { fetchAuth, selectIsAuth } from "../../redux/slices/auth";
 
 export const Login = () => {
-    const 
+    const isAuth = useSelector(selectIsAuth);
     const dispatch = useDispatch();
 
     const {
@@ -31,6 +31,10 @@ export const Login = () => {
     const onSubmit = (values) => {
         dispatch(fetchAuth(values));
     };
+
+    if (isAuth) {
+        return <Navigate to="/" />;
+    }
 
     return (
         <Paper classes={{ root: styles.root }}>
@@ -52,6 +56,7 @@ export const Login = () => {
                     label="Пароль"
                     error={Boolean(errors.password?.message)}
                     helperText={errors.password?.message}
+                    type="password"
                     {...register("password", { required: "Укажите пароль" })}
                     fullWidth
                 />
