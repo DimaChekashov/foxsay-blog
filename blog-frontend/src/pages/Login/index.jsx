@@ -18,7 +18,6 @@ export const Login = () => {
     const {
         register,
         handleSubmit,
-        setError,
         formState: { errors, isValid },
     } = useForm({
         defaultValues: {
@@ -37,7 +36,7 @@ export const Login = () => {
 
         if ("token" in data.payload) {
             window.localStorage.setItem("token", data.payload.token);
-        } 
+        }
     };
 
     if (isAuth) {
@@ -56,7 +55,7 @@ export const Login = () => {
                     error={Boolean(errors.email?.message)}
                     helperText={errors.email?.message}
                     type="email"
-                    {...register("email", { required: "Укажите почту" })}
+                    {...register("email", { required: "Enter email" })}
                     fullWidth
                 />
                 <TextField
@@ -65,10 +64,11 @@ export const Login = () => {
                     error={Boolean(errors.password?.message)}
                     helperText={errors.password?.message}
                     type="password"
-                    {...register("password", { required: "Укажите пароль" })}
+                    {...register("password", { required: "Enter password" })}
                     fullWidth
                 />
                 <Button
+                    disabled={!isValid}
                     type="submit"
                     size="large"
                     variant="contained"
