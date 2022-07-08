@@ -5,6 +5,7 @@ import axios from "../axios";
 import { Post } from "../components/Post";
 import { Index } from "../components/AddComment";
 import { CommentsBlock } from "../components/CommentsBlock";
+import ReactMarkdown from "react-markdown";
 
 export const FullPost = () => {
     const [data, setData] = useState();
@@ -33,7 +34,7 @@ export const FullPost = () => {
             <Post
                 id={data._id}
                 title={data.title}
-                imageUrl={data.imageUrl}
+                imageUrl={`http://localhost:4444${data.imageUrl}`}
                 user={data.user}
                 createdAt={data.createdAt}
                 viewsCount={data.viewsCount}
@@ -41,7 +42,7 @@ export const FullPost = () => {
                 tags={data.tags}
                 isFullPost
             >
-                <p>{data.text}</p>
+                <ReactMarkdown children={data.text} />
             </Post>
             <CommentsBlock
                 items={[
